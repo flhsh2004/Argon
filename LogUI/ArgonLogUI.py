@@ -43,8 +43,8 @@ if __name__ == '__main__':
     # 读取配置文件
     # casename = 'Standard Process Testing'
     # casename = 'test_skip_procedure'
-    casename = 'test_standard_procedure'
-    # casename = 'test_standard_fail'
+    # casename = 'test_standard_procedure'
+    casename = 'test_standard_fail'
     # casename = 'APDU'
 
     # 窗体设置

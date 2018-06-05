@@ -8,7 +8,7 @@ from APDU import PCSCReader
 class ArgonTest(unittest.TestCase):
     def setUp(self):
         initlog(self._testMethodName)
-        translog('Establish Context')
+        translog('Info', 'Establish Context')
         self.device = PCSCReader()
         # TODO 参数需要通过配置文件读取
         self.device.openPort('USB')
@@ -36,7 +36,7 @@ class ArgonTest(unittest.TestCase):
             except:
                 raise ArgonLogError('No Log Root')
 
-        translog('Release Context')
+        translog('Info', 'Release Context')
         self.device.closePort()
         if not savecaselog():
             self.fail('Case [' + self._testMethodName + '] Failed. Please Check Case Log!' )

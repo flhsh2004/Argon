@@ -5,8 +5,8 @@
     - {level: '3', msg: OpenUSB, status: Pass}
     msg: Connect Device
     status: Pass
-  msg: ''
-  status: Establish Context
+  msg: Establish Context
+  status: Pass
 - level: '1'
   module: []
   msg: Skip Test
@@ -18,5 +18,5 @@
     - {level: '3', msg: Close Port, status: Pass}
     msg: Disconnect Device
     status: Pass
-  msg: ''
-  status: Release Context
+  msg: Release Context
+  status: Pass
