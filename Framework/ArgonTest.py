@@ -9,9 +9,16 @@ class ArgonTest(unittest.TestCase):
     def setUp(self):
         initlog(self._testMethodName)
         translog('Info', 'Establish Context')
-        self.device = mydevice('PCSC')
-        # TODO 参数需要通过配置文件读取
-        self.device.openport('Identiv uTrust 4700 F CL Reader 1')
+
+        try:
+            self.device = mydevice('PCSC')
+            # TODO 参数需要通过配置文件读取
+            # self.device.openport('Generic Usb Smart Card Reader 0')
+            self.device.openport('Identiv uTrust 4700 F CL Reader 1')
+        except Exception:
+            savecaselog()
+            raise
+
 
     def tearDown(self):
         if not self._outcome.errors[-1][1] is None:
@@ -37,9 +44,14 @@ class ArgonTest(unittest.TestCase):
                 raise ArgonLogError('No Log Root')
 
         translog('Info', 'Release Context')
-        self.device.closeport()
-        if not savecaselog():
-            self.fail('Case [' + self._testMethodName + '] Failed. Please Check Case Log!')
+        try:
+            self.device.closeport()
+        except Exception:
+            savecaselog()
+            raise
+        else:
+            if not savecaselog():
+                self.fail('Case [' + self._testMethodName + '] Failed. Please Check Case Log!')
 
     @staticmethod
     def begintrans(msg):

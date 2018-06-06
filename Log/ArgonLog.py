@@ -21,11 +21,6 @@ level_module = '2'
 level_match = '3'
 
 
-class ArgonLogError(Exception):
-    """日志保存处理类"""
-    pass
-
-
 def initlog(name):
     """初始化log存储名"""
     global casename
@@ -60,6 +55,11 @@ def translog(status, msg=''):
                         'module': []})
     except Exception:
         raise ArgonLogError('No Log Root')
+
+
+class ArgonLogError(Exception):
+    """日志保存处理类"""
+    pass
 
 
 def modulelog(msg=''):
@@ -166,16 +166,16 @@ def recordinfo(func):
 
 def recordopen(func):
     def wrapper(*args):
-        status = func(*args)
         modulelog('Connect Device')
+        status = func(*args)
         matchlog(status, 'Open' + args[-1])
     return wrapper
 
 
 def recordclose(func):
     def wrapper(*args):
-        status = func(*args)
         modulelog('Disconnect Device')
+        status = func(*args)
         matchlog(status, 'Close Port')
     return wrapper
 

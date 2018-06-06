@@ -1,5 +1,8 @@
+from ArgonLog import translog, label_error
+
 class DeviceError(Exception):
-    pass
+    def __init__(self, *args):
+        translog(label_error, args[0])
 
 
 class DataError(Exception):

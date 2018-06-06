@@ -1,22 +1,12 @@
 - level: '1'
   module:
   - level: '2'
-    list:
-    - {level: '3', msg: OpenIdentiv uTrust 4700 F CL Reader 1, status: Pass}
+    list: []
     msg: Connect Device
-    status: Pass
+    status: Info
   msg: Establish Context
   status: Pass
 - level: '1'
   module: []
-  msg: Error
+  msg: No Device Identiv uTrust 4700 F CL Reader 1
   status: Error
-- level: '1'
-  module:
-  - level: '2'
-    list:
-    - {level: '3', msg: Close Port, status: Pass}
-    msg: Disconnect Device
-    status: Pass
-  msg: Release Context
-  status: Pass
