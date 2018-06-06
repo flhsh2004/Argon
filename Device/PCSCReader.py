@@ -1,4 +1,4 @@
-from ArgonDivice import *
+from ArgonDevice import *
 from ArgonLog import *
 from smartcard.scard import *
 from smartcard.System import readers
