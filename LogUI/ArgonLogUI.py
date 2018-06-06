@@ -2,6 +2,7 @@ from tkinter import *
 from tkinter import ttk
 from PIL import Image, ImageTk
 import yaml
+import os
 
 
 # 弹出菜单
@@ -43,9 +44,8 @@ if __name__ == '__main__':
     # 读取配置文件
     # casename = 'Standard Process Testing'
     # casename = 'test_skip_procedure'
-    casename = 'test_standard_procedure'
-    # casename = 'test_standard_fail'
-    # casename = 'APDU'
+    # casename = 'test_standard_procedure'
+    casename = 'test_standard_fail'
 
     # 窗体设置
     window = Tk()
@@ -59,10 +59,17 @@ if __name__ == '__main__':
 
     popmenu = TreePopMenu()
 
-    frame = LabelFrame(window, height=400, width=400)
-    frame.pack(fill=BOTH, expand=1)
+    frame = LabelFrame(window, height=500, width=500)
+    frame.pack(fill=BOTH, expand=True)
     tree = ttk.Treeview(frame, show='tree')
-    tree.pack(fill=BOTH, expand=1)
+
+    ysb = ttk.Scrollbar(tree, orient="vertical", command=tree.yview)
+    xsb = ttk.Scrollbar(window, orient="horizontal", command=tree.xview)
+    tree.configure(yscroll=ysb.set, xscroll=xsb.set)
+
+    tree.pack(fill=BOTH, expand=True)
+    ysb.pack(fill=Y, side=RIGHT)
+    xsb.pack(fill=X, side=BOTTOM)
 
 
     def rclfun(event):
@@ -85,71 +92,72 @@ if __name__ == '__main__':
     error_image = importimage(r'Pic/error.png')
     skip_image = importimage(r'Pic/skip.png')
 
-    stream = open(r'../LogDir/' + casename + '.yml', 'r')
-    data = yaml.load(stream)
-    stream.close()
+    for i ,yml in enumerate(os.listdir(r'../LogDir')):
+        stream = open(r'../LogDir/' + yml, 'r')
+        data = yaml.load(stream)
+        stream.close()
 
-    case = tree.insert('', 0, casename, text=casename, image=case_image)
-    tree.item(case, open=True)
+        case = tree.insert('', i, yml[:-4], text=yml[:-4], image=case_image)
+        tree.item(case, open=False)
 
-    # 循环读入交易
-    for x, trans in enumerate(data):
-        photo = changephoto(trans['status'])
-        cur_trans = tree.insert(case, x, str(x)+trans['msg'], text=trans['msg'], image=photo)
-        tree.item(cur_trans, open=True)
+        # 循环读入交易
+        for x, trans in enumerate(data):
+            photo = changephoto(trans['status'])
+            cur_trans = tree.insert(case, x, str(i)+str(x)+trans['msg'], text=trans['msg'], image=photo)
+            tree.item(cur_trans, open=True)
 
-        # 循环读入模块
-        for y, module in enumerate(trans['module']):
-            photo = changephoto(module['status'])
-            cur_module = tree.insert(cur_trans, y, str(x)+str(y)+module['msg'], text=module['msg'], image=photo)
-            tree.item(cur_module, open=True)
+            # 循环读入模块
+            for y, module in enumerate(trans['module']):
+                photo = changephoto(module['status'])
+                cur_module = tree.insert(cur_trans, y, str(i)+str(x)+str(y)+module['msg'], text=module['msg'], image=photo)
+                tree.item(cur_module, open=True)
 
-            # 循环读入比较
-            for z, match in enumerate(module['list']):
-                photo = changephoto(match['status'])
-                cur_match = tree.insert(cur_module, z, str(x)+str(y)+str(z)+match['msg'], text=match['msg'], image=photo)
-                tree.item(cur_match, open=False)
-                if len(match) == 8:
-                    tree.insert(cur_match, 0, text=match['send'], image=send_image)
-                    if match['a-SW'] != '':
-                        tree.insert(cur_match, 1, text=match['a-SW'], image=sw_image)
+                # 循环读入比较
+                for z, match in enumerate(module['list']):
+                    photo = changephoto(match['status'])
+                    cur_match = tree.insert(cur_module, z, str(i)+str(x)+str(y)+str(z)+match['msg'], text=match['msg'], image=photo)
+                    tree.item(cur_match, open=False)
+                    if len(match) == 8:
+                        tree.insert(cur_match, 0, text=match['send'], image=send_image)
+                        if match['a-SW'] != '':
+                            tree.insert(cur_match, 1, text=match['a-SW'], image=sw_image)
 
-                    def checksw(prtn, pSW):
-                        if isinstance(pSW, list):
-                            for sw_param in pSW:
-                                if sw_param == prtn:
+                        def checksw(prtn, pSW):
+                            if isinstance(pSW, list):
+                                for sw_param in pSW:
+                                    if sw_param == prtn:
+                                        return True
+                            elif isinstance(pSW, str):
+                                if (pSW == prtn) | (pSW == ''):
                                     return True
-                        elif isinstance(pSW, str):
-                            if (pSW == prtn) | (pSW == ''):
-                                return True
-                        else:
-                            raise Exception('Wrong SW Type')
-                        return False
+                            else:
+                                raise Exception('Wrong SW Type')
+                            return False
 
-                    if not checksw(match['a-SW'], match['r-SW']):
-                        photo = changephoto('Fail')
-                    else:
-                        photo = changephoto('Pass')
-
-                    if match['r-SW'] != '':
-                        tree.insert(cur_match, 2, text=match['r-SW'], image=photo)
-
-                    if match['a-recv'] != '':
-                        tree.insert(cur_match, 3, text=match['a-recv'], image=recv_image)
-                    # TODO
-                    if (match['a-recv'] != '') & (match['r-recv'] != ''):
-                        if match['a-recv'] != match['r-recv']:
+                        if not checksw(match['a-SW'], match['r-SW']):
                             photo = changephoto('Fail')
                         else:
                             photo = changephoto('Pass')
-                        tree.insert(cur_match, 4, text=match['r-recv'], image=photo)
-                elif len(match) == 5:
-                    tree.insert(cur_match, 0, text=match['a-value'], image=recv_image)
-                    if match['a-value'] != match['r-value']:
-                        photo = changephoto('Fail')
-                    else:
-                        photo = changephoto('Pass')
-                    tree.insert(cur_match, 2, text=match['r-value'], image=photo)
+
+                        if match['r-SW'] != '':
+                            tree.insert(cur_match, 2, text=match['r-SW'], image=photo)
+
+                        if match['a-recv'] != '':
+                            tree.insert(cur_match, 3, text=match['a-recv'], image=recv_image)
+                        # TODO
+                        if (match['a-recv'] != '') & (match['r-recv'] != ''):
+                            if match['a-recv'] != match['r-recv']:
+                                photo = changephoto('Fail')
+                            else:
+                                photo = changephoto('Pass')
+                            tree.insert(cur_match, 4, text=match['r-recv'], image=photo)
+                    elif len(match) == 5:
+                        tree.insert(cur_match, 0, text=match['a-value'], image=recv_image)
+                        if match['a-value'] != match['r-value']:
+                            photo = changephoto('Fail')
+                        else:
+                            photo = changephoto('Pass')
+                        tree.insert(cur_match, 2, text=match['r-value'], image=photo)
 
     # 运行窗体
     window.mainloop()
