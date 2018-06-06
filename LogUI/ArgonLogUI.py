@@ -43,8 +43,8 @@ if __name__ == '__main__':
     # 读取配置文件
     # casename = 'Standard Process Testing'
     # casename = 'test_skip_procedure'
-    # casename = 'test_standard_procedure'
-    casename = 'test_standard_fail'
+    casename = 'test_standard_procedure'
+    # casename = 'test_standard_fail'
     # casename = 'APDU'
 
     # 窗体设置
@@ -111,7 +111,8 @@ if __name__ == '__main__':
                 tree.item(cur_match, open=False)
                 if len(match) == 8:
                     tree.insert(cur_match, 0, text=match['send'], image=send_image)
-                    tree.insert(cur_match, 1, text=match['a-SW'], image=sw_image)
+                    if match['a-SW'] != '':
+                        tree.insert(cur_match, 1, text=match['a-SW'], image=sw_image)
 
                     def checksw(prtn, pSW):
                         if isinstance(pSW, list):
@@ -133,7 +134,8 @@ if __name__ == '__main__':
                     if match['r-SW'] != '':
                         tree.insert(cur_match, 2, text=match['r-SW'], image=photo)
 
-                    tree.insert(cur_match, 3, text=match['a-recv'], image=recv_image)
+                    if match['a-recv'] != '':
+                        tree.insert(cur_match, 3, text=match['a-recv'], image=recv_image)
                     # TODO
                     if (match['a-recv'] != '') & (match['r-recv'] != ''):
                         if match['a-recv'] != match['r-recv']:

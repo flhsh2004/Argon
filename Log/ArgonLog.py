@@ -40,7 +40,7 @@ def savecaselog():
         stream = open(r'../LogDir/' + casename + '.yml', 'w')
         yaml.dump(log_all, stream)
         stream.close()
-    except:
+    except Exception:
         raise Exception('Log Save Error')
     finally:
         casestatus = casepass
@@ -58,7 +58,7 @@ def translog(status, msg=''):
                         'status': status,
                         'msg': msg,
                         'module': []})
-    except:
+    except Exception:
         raise ArgonLogError('No Log Root')
 
 
@@ -66,7 +66,7 @@ def modulelog(msg=''):
     """模块日志"""
     try:
         log_trans = log_all[-1]
-    except:
+    except Exception:
         raise ArgonLogError('No Trans Node')
 
     log_trans['module'].append({'level': level_module,
@@ -84,13 +84,13 @@ def matchlog(status, msg='match string', *args):
     # 判断是否含有Trans节点
     try:
         log_trans = log_all[-1]
-    except:
+    except Exception:
         raise ArgonLogError('No Trans Node')
 
     # 判断是否含有Module节点
     try:
         log_module = log_trans['module'][-1]
-    except:
+    except Exception:
         raise ArgonLogError('No Module Node')
 
     # 判断为Error状态则抛出异常
@@ -118,7 +118,7 @@ def matchlog(status, msg='match string', *args):
                                        'msg': msg,
                                        'a-value': args[0],
                                        'r-value': args[1]})
-        # ADPU节点
+        # APDU节点
         elif len(args) == 5:
             log_module['list'].append({'level': level_match,
                                        'status': status,
@@ -140,7 +140,7 @@ def matchlog(status, msg='match string', *args):
         log_module['list'].append({'level': level_match,
                                    'status': label_warning,
                                    'msg': 'Param Illegal'})
-    except:
+    except Exception:
         raise ArgonLogError('Unknown Error')
 
 
@@ -194,7 +194,7 @@ def recordreset(func):
 
 def recordapdu(func):
     def wrapper(*args, **kwargs):
-        RtnData, rtn, status = func(*args, **kwargs)
+        rtn_data, rtn_sw, status = func(*args, **kwargs)
 
         # args存储APDU和msg(有默认值)
         if len(args) == 3:
@@ -203,17 +203,17 @@ def recordapdu(func):
             msg = 'Unnamed Command'
 
         # kwargs存储SW(单字符串/列表)和expectData
-        if 'expectData' in kwargs.keys():
-            expectData = kwargs['expectData']
+        if 'expect_data' in kwargs.keys():
+            expect_data = kwargs['expect_data']
         else:
-            expectData = ''
+            expect_data = ''
 
-        if 'SW' in kwargs.keys():
-            SW = kwargs['SW']
+        if 'sw' in kwargs.keys():
+            expect_sw = kwargs['sw']
         else:
-            SW = ''
+            expect_sw = ''
 
-        matchlog(status, msg, args[1], RtnData, expectData, rtn, SW)
+        matchlog(status, msg, args[1], rtn_data, expect_data, rtn_sw, expect_sw)
     return wrapper
 
 

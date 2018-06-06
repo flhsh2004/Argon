@@ -1,17 +1,17 @@
 import unittest
 import functools
-from ArgonLog import *
 
-from APDU import PCSCReader
+from MyDevice import *
+from ArgonLog import *
 
 
 class ArgonTest(unittest.TestCase):
     def setUp(self):
         initlog(self._testMethodName)
         translog('Info', 'Establish Context')
-        self.device = PCSCReader()
+        self.device = mydevice('PCSC')
         # TODO 参数需要通过配置文件读取
-        self.device.openPort('USB')
+        self.device.openport('Identiv uTrust 4700 F CL Reader 1')
 
     def tearDown(self):
         if not self._outcome.errors[-1][1] is None:
@@ -33,13 +33,13 @@ class ArgonTest(unittest.TestCase):
                                 'status': err_type,
                                 'msg': err_msg,
                                 'module': []})
-            except:
+            except Exception:
                 raise ArgonLogError('No Log Root')
 
         translog('Info', 'Release Context')
-        self.device.closePort()
+        self.device.closeport()
         if not savecaselog():
-            self.fail('Case [' + self._testMethodName + '] Failed. Please Check Case Log!' )
+            self.fail('Case [' + self._testMethodName + '] Failed. Please Check Case Log!')
 
     @staticmethod
     def begintrans(msg):
@@ -53,7 +53,7 @@ class ArgonTest(unittest.TestCase):
         raise ArgonSkipTest(reason)
 
     def fail(self, msg=None):
-        if (msg is None) | (msg==''):
+        if (msg is None) | (msg == ''):
             msg = 'Unnamed Failure'
         translog(label_fail, msg)
         super().fail(msg)
@@ -69,8 +69,8 @@ class ArgonTest(unittest.TestCase):
 
 class ArgonSkipTest(unittest.SkipTest):
     """日志保存处理类"""
-    def __init__(self, *args, **kwargs):
-        translog(label_skip, self.args[0])
+    def __init__(self, *args):
+        translog(label_skip, args[0])
 
 
 def _id(obj):
@@ -84,7 +84,7 @@ def skip(reason):
     def decorator(test_item):
         if not isinstance(test_item, type):
             @functools.wraps(test_item)
-            def skip_wrapper(*args, **kwargs):
+            def skip_wrapper():
                 raise ArgonSkipTest(reason)
             test_item = skip_wrapper
 
@@ -99,7 +99,7 @@ def skip(reason):
     return decorator
 
 
-def skipIf(condition, reason):
+def skipif(condition, reason):
     """
     Skip a test if the condition is true.
     """
@@ -108,7 +108,7 @@ def skipIf(condition, reason):
     return _id
 
 
-def skipUnless(condition, reason):
+def skipunless(condition, reason):
     """
     Skip a test unless the condition is true.
     """

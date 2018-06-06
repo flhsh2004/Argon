@@ -1,13 +1,13 @@
-class DataError(AssertionError):
-    def __init__(self,actualData,expectData):
-        self.ID = "DataError"
-        self.detail = "响应数据错误，期望返回"+ expectData + "，实际返回" + actualData
+class DeviceError(Exception):
+    pass
+
+
+class DataError(Exception):
+    pass
 
 
 class SWError(AssertionError):
-    def __init__(self, actualSW,expectSW):
-        self.ID = "SWError"
-        self.detail = "响应码错误，期望返回"+ expectSW + "，实际返回" + actualSW
+    pass
 
 
 class ResultError(Exception):
@@ -24,61 +24,58 @@ class ResultError(Exception):
 
 
 class ArgonDevice(object):
-    def openPort(self,port):
+    def openport(self, port):
         pass
 
     def reset(self):
         pass
 
-    def senDisplay(self,APDUdata, *SW, expectData = ""):
+    def sendisplay(self, apdudata, msg='', **kwargs):
         pass
 
-    def closePort(self):
+    def closeport(self):
         pass
 
     @staticmethod
-    def checkRespData(actualData,expectData):
-        if expectData != "":
-            if actualData != expectData:
-                raise DataError(actualData,expectData)
+    def checkrespdata(actualdata, expectdata):
+        if (expectdata != '') & (expectdata != actualdata):
+            return False
+        else:
+            return True
 
     @staticmethod
-    def checkSW(actualSW,expectSW):
-        SWTag = False
-        if len(expectSW) == 0:
-            expectRtn = "9000"
-            if actualSW == "9000":
-                SWTag = True
+    def checksw(actualsw, expectsw):
+        if isinstance(expectsw, list):
+            for sw_param in expectsw:
+                if sw_param == actualsw:
+                    return True
+        elif isinstance(expectsw, str):
+            if expectsw == actualsw:
+                return True
         else:
-            for index in range(len(expectSW)):
-                if index == 0:
-                    expectRtn = expectSW[index]
-                else:
-                    expectRtn = expectRtn + "\\" + expectSW[index]
-                if actualSW == expectSW[index]:
-                    SWTag = True
-        if SWTag == False:
-            raise SWError(actualSW, expectRtn)
+            raise SWError('Wrong Expect SW')
+        return False
 
+    '''
     @staticmethod
-    def showAPDU(APDUdata,actualData,expectData,actualSW,expectSW):
-        expectRtn = ""
-        if len(expectSW) == 0:
-            expectRtn = "9000"
+    def _showapdu(apdudata, actualdata, expectdata, actualsw, expectsw):
+        expect_rtn = ""
+        if len(expectsw) == 0:
+            expect_rtn = "9000"
         else:
-            for index in range(len(expectSW)):
+            for index in range(len(expectsw)):
                 if index == 0:
-                    expectRtn = expectSW[index]
+                    expect_rtn = expectsw[index]
                 else:
-                    expectRtn = expectRtn + "\\" + expectSW[index]
-        print("AH:"+APDUdata.upper())
-        if expectData != "":
-            print("ED:" + expectData.upper())
-        if actualData != "":
-            print("AD:" + actualData.upper())
-        print("ES:"+ expectRtn)
-        print("AS:"+actualSW.upper())
-
+                    expect_rtn = expect_rtn + "\\" + expectsw[index]
+        print("AH:" + apdudata.upper())
+        if expectdata != "":
+            print("ED:" + expectdata.upper())
+        if actualdata != "":
+            print("AD:" + actualdata.upper())
+        print("ES:" + expect_rtn)
+        print("AS:" + actualsw.upper())
+    '''
 
 
 

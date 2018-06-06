@@ -17,7 +17,7 @@ class SubTest(ArgonTest):
     def test_standard_blank(self):
         self.begintrans('Blank Transcation')
 
-    # @skipIf(True, 'skipIf')
+    # @skipif(True, 'skipIf')
     def test_standard_fail(self):
         # raise AssertionError('')
         raise ArgonLogError('Error')
