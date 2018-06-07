@@ -1,0 +1,4 @@
+- type: PCSC
+  port: Identiv uTrust 4700 F CL Reader 1
+- type: USB
+  port1: USB1

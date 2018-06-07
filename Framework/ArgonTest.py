@@ -11,10 +11,12 @@ class ArgonTest(unittest.TestCase):
         translog('Info', 'Establish Context')
 
         try:
-            self.device = mydevice('PCSC')
-            # TODO 参数需要通过配置文件读取
-            # self.device.openport('Generic Usb Smart Card Reader 0')
-            self.device.openport('Identiv uTrust 4700 F CL Reader 1')
+            stream = open(r'../Config/device.yml', 'r')
+            data = yaml.load(stream)
+            stream.close()
+
+            self.device = mydevice(data[0]['type'])
+            self.device.openport(data[0]['port'])
         except Exception:
             savecaselog()
             raise

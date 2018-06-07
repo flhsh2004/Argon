@@ -168,7 +168,7 @@ def recordopen(func):
     def wrapper(*args):
         modulelog('Connect Device')
         status = func(*args)
-        matchlog(status, 'Open' + args[-1])
+        matchlog(status, 'Open ' + args[-1])
     return wrapper
 
 
