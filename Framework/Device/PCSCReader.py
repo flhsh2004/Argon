@@ -20,7 +20,7 @@ class PCSCReader(ArgonDevice):
                     self.ATR = toHexString(self.connection.getATR(), PACK)
                     return label_pass
                 except Exception:
-                    raise DeviceError('Open ' + port + 'Failed')
+                    raise DeviceError('Open ' + port + ' Failed')
         raise DeviceError('No Device ' + port)
 
     @recordreset

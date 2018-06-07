@@ -52,6 +52,7 @@ class ArgonTest(unittest.TestCase):
             savecaselog()
             raise
         else:
+            # TODO 此处有BUG
             if not savecaselog():
                 self.fail('Case [' + self._testMethodName + '] Failed. Please Check Case Log!')
 

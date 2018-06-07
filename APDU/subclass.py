@@ -11,10 +11,11 @@ class SubTest(ArgonTest):
         self.begintrans('Standard Transcation')
         self.mytest.select('Select Process')
 
-    def test_skip_procedure(self):
+    def test_standard_skip_procedure(self):
         self.skipTest('Skip Test')
 
-    def test_standard_blank(self):
+
+    def test_standard_blank_procedure(self):
         self.begintrans('Blank Transcation')
 
     # @skipif(True, 'skipIf')

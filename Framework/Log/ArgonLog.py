@@ -24,7 +24,11 @@ level_match = '3'
 def initlog(name):
     """初始化log存储名"""
     global casename
+    global casepass
+
+    casepass = True
     casename = name
+    log_all.clear()
 
 
 def savecaselog():
@@ -32,7 +36,7 @@ def savecaselog():
     global casename
     global casepass
     try:
-        stream = open(r'../../Log/' + casename + '.yml', 'w')
+        stream = open(r'../Log/' + casename + '.yml', 'w')
         yaml.dump(log_all, stream)
         stream.close()
     except Exception:
