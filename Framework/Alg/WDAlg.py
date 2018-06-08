@@ -14,11 +14,13 @@ from binascii import *
 from ArgonUtility import *
 import ctypes
 
-class wdalgerr(ValueError):  #继承ValueError，此类在Crypto模块中实现
+
+class wdalgerr(ValueError):  # 继承ValueError，此类在Crypto模块中实现
     pass
 
+
 # HASH算法
-#计算SHA1
+# 计算SHA1
 def sha1(str):
     result = ''
     hash = hashlib.sha1()
@@ -26,7 +28,8 @@ def sha1(str):
     result = hash.hexdigest()
     return result
 
-#计算SHA256
+
+# 计算SHA256
 def sha256(str):
     result = ''
     hash = hashlib.sha256()
@@ -34,7 +37,8 @@ def sha256(str):
     result = hash.hexdigest()
     return result
 
-#计算MD5
+
+# 计算MD5
 def md5(str):
     result = ''
     hash = hashlib.md5()
@@ -42,7 +46,8 @@ def md5(str):
     result = hash.hexdigest()
     return result
 
-#计算SHA384
+
+# 计算SHA384
 def sha384(str):
     result = ''
     hash = hashlib.sha384()
@@ -50,7 +55,8 @@ def sha384(str):
     result = hash.hexdigest()
     return result
 
-#计算SHA512
+
+# 计算SHA512
 def sha512(str):
     result = ''
     hash = hashlib.sha512()
@@ -58,178 +64,185 @@ def sha512(str):
     result = hash.hexdigest()
     return result
 
-#AES算法的ECB模式的加密解密
+
+# AES算法的ECB模式的加密解密
 def AESECB(data, protectKey, type):
-    if (len(protectKey)/2) % 16 != 0:
-        raise wdalgerr("Incorrect AES key length (%d bytes)" % (len(protectKey)/2))
-    if (len(data)/2) % 16 != 0:
+    if (len(protectKey) / 2) % 16 != 0:
+        raise wdalgerr("Incorrect AES key length (%d bytes)" % (len(protectKey) / 2))
+    if (len(data) / 2) % 16 != 0:
         data = data + "80"
-        while (len(data)/2) % 16 != 0:
+        while (len(data) / 2) % 16 != 0:
             data += "00"
-            if (len(data)/2) % 16 == 0:
+            if (len(data) / 2) % 16 == 0:
                 break
     databytes = bytes.fromhex(data)
     Keybytes = bytes.fromhex(protectKey)
     result = ''
-    if type == 1:  #加密
+    if type == 1:  # 加密
         aes = AES.new(Keybytes, AES.MODE_ECB)
         endata = aes.encrypt(databytes)
         result = endata.hex()
 
-    if type == 2:  #解密
+    if type == 2:  # 解密
         aes = AES.new(Keybytes, AES.MODE_ECB)
         dedata = aes.decrypt(databytes)
         result = dedata.hex()
 
     return result
 
-#AES算法的CBC模式的加密解密
+
+# AES算法的CBC模式的加密解密
 def AESCBC(data, protectKey, type, iv):
-    if (len(protectKey)/2) % 16 != 0:
-        raise wdalgerr("Incorrect AES key length (%d bytes)" % (len(protectKey)/2))
-    if (len(iv)/2) % 16 != 0:
-        raise wdalgerr("Incorrect AES iv  length (%d bytes)" % (len(iv)/2))
-    if (len(data)/2) % 16 != 0:
+    if (len(protectKey) / 2) % 16 != 0:
+        raise wdalgerr("Incorrect AES key length (%d bytes)" % (len(protectKey) / 2))
+    if (len(iv) / 2) % 16 != 0:
+        raise wdalgerr("Incorrect AES iv  length (%d bytes)" % (len(iv) / 2))
+    if (len(data) / 2) % 16 != 0:
         data = data + "80"
-        while (len(data)/2) % 16 != 0:
+        while (len(data) / 2) % 16 != 0:
             data += "00"
-            if (len(data)/2) % 16 == 0:
+            if (len(data) / 2) % 16 == 0:
                 break
     databytes = bytes.fromhex(data)
     Keybytes = bytes.fromhex(protectKey)
     ivbytes = bytes.fromhex(iv)
     result = ''
-    if type == 1:  #加密
+    if type == 1:  # 加密
         aes = AES.new(Keybytes, AES.MODE_CBC, ivbytes)
         endata = aes.encrypt(databytes)
         result = endata.hex()
 
-    if type == 2:  #解密
+    if type == 2:  # 解密
         aes = AES.new(Keybytes, AES.MODE_CBC, ivbytes)
         dedata = aes.decrypt(databytes)
         result = dedata.hex()
     return result
 
 
-#DES算法的ECB模式的加密解密
+# DES算法的ECB模式的加密解密
 def DESECB(data, protectKey, type):
-    if (len(protectKey)/2) % 8 != 0:
-        raise wdalgerr("Incorrect des key length (%d bytes)" % (len(protectKey)/2))
-    if (len(data)/2) % 8 != 0:
+    if (len(protectKey) / 2) % 8 != 0:
+        raise wdalgerr("Incorrect des key length (%d bytes)" % (len(protectKey) / 2))
+    if (len(data) / 2) % 8 != 0:
         data = data + "80"
-        while (len(data)/2) % 8 != 0:
+        while (len(data) / 2) % 8 != 0:
             data += "00"
-            if (len(data)/2) % 8 == 0:
+            if (len(data) / 2) % 8 == 0:
                 break
 
     databytes = bytes.fromhex(data)
     Keybytes = bytes.fromhex(protectKey)
     result = ''
-    if type == 1:  #加密
+    if type == 1:  # 加密
         des = DES.new(Keybytes, DES.MODE_ECB)
         endata = des.encrypt(databytes)
         print(endata)
         result = endata.hex()
-    if type == 2:  #解密
+    if type == 2:  # 解密
         des = DES.new(Keybytes, DES.MODE_ECB)
         dedata = des.decrypt(databytes)
         result = dedata.hex()
     return result
 
-#DES算法的CBC模式的加密解密
+
+# DES算法的CBC模式的加密解密
 def DESCBC(data, protectKey, type, iv):
-    if (len(protectKey)/2) % 8 != 0:
-        raise wdalgerr("Incorrect des key length (%d bytes)" % (len(protectKey)/2))
-    if (len(iv)/2) % 8 != 0:
-        raise wdalgerr("Incorrect des iv  length (%d bytes)" % (len(iv)/2))
-    if (len(data)/2) % 8 != 0:
+    if (len(protectKey) / 2) % 8 != 0:
+        raise wdalgerr("Incorrect des key length (%d bytes)" % (len(protectKey) / 2))
+    if (len(iv) / 2) % 8 != 0:
+        raise wdalgerr("Incorrect des iv  length (%d bytes)" % (len(iv) / 2))
+    if (len(data) / 2) % 8 != 0:
         data = data + "80"
-        while (len(data)/2) % 8 != 0:
+        while (len(data) / 2) % 8 != 0:
             data += "00"
-            if (len(data)/2) % 8 == 0:
+            if (len(data) / 2) % 8 == 0:
                 break
     databytes = bytes.fromhex(data)
     Keybytes = bytes.fromhex(protectKey)
     ivbytes = bytes.fromhex(iv)
     result = ''
-    if type == 1:  #加密
+    if type == 1:  # 加密
         des = DES.new(Keybytes, DES.MODE_CBC, ivbytes)
         endata = des.encrypt(databytes)
         result = endata.hex()
-    if type == 2:  #解密
+    if type == 2:  # 解密
         des = DES.new(Keybytes, DES.MODE_CBC, ivbytes)
         dedata = des.decrypt(databytes)
         result = dedata.hex()
     return result
 
-#3DES算法的ECB模式的加密解密
+
+# 3DES算法的ECB模式的加密解密
 def DES3ECB(data, protectKey, type):
-    if (len(protectKey)/2) % 16 != 0:
-        raise wdalgerr("Incorrect 3des key length (%d bytes)" % (len(protectKey)/2))
+    if (len(protectKey) / 2) % 16 != 0:
+        raise wdalgerr("Incorrect 3des key length (%d bytes)" % (len(protectKey) / 2))
     if protectKey[:16] == protectKey[16:32] or protectKey[-32:-16] == protectKey[-16:]:
         raise wdalgerr("Triple DES key degenerates to single DES")
 
-    if (len(data)/2) % 8 != 0:
+    if (len(data) / 2) % 8 != 0:
         data = data + "80"
-        while (len(data)/2) % 8 != 0:
+        while (len(data) / 2) % 8 != 0:
             data += "00"
-            if (len(data)/2) % 8 == 0:
+            if (len(data) / 2) % 8 == 0:
                 break
     databytes = bytes.fromhex(data)
     Keybytes = bytes.fromhex(protectKey)
     result = ''
-    if type == 1:  #加密
+    if type == 1:  # 加密
         des = DES3.new(Keybytes, DES.MODE_ECB)
         endata = des.encrypt(databytes)
         result = endata.hex()
-    if type == 2:  #解密
+    if type == 2:  # 解密
         des = DES3.new(Keybytes, DES.MODE_ECB)
         dedata = des.decrypt(databytes)
         result = dedata.hex()
     return result
 
-#3DES算法的CBC模式的加密解密
+
+# 3DES算法的CBC模式的加密解密
 def DES3CBC(data, protectKey, type, iv):
-    if (len(protectKey)/2) % 16 != 0:
-        raise wdalgerr("Incorrect 3des key length (%d bytes)" % (len(protectKey)/2))
-    if (len(iv)/2) % 16 != 0:
-        raise wdalgerr("Incorrect 3des iv length (%d bytes)" % (len(iv)/2))
+    if (len(protectKey) / 2) % 16 != 0:
+        raise wdalgerr("Incorrect 3des key length (%d bytes)" % (len(protectKey) / 2))
+    if (len(iv) / 2) % 16 != 0:
+        raise wdalgerr("Incorrect 3des iv length (%d bytes)" % (len(iv) / 2))
     if protectKey[:16] == protectKey[16:32] or protectKey[-32:-16] == protectKey[-16:]:
         raise wdalgerr("Triple DES key degenerates to single DES")
-    if (len(data)/2) % 8 != 0:
+    if (len(data) / 2) % 8 != 0:
         data = data + "80"
-        while (len(data)/2) % 8 != 0:
+        while (len(data) / 2) % 8 != 0:
             data += "00"
-            if (len(data)/2) % 8 == 0:
+            if (len(data) / 2) % 8 == 0:
                 break
     databytes = bytes.fromhex(data)
     Keybytes = bytes.fromhex(protectKey)
     ivbytes = bytes.fromhex(iv)
     result = ''
-    if type == 1:  #加密
+    if type == 1:  # 加密
         des = DES3.new(Keybytes, DES.MODE_CBC, ivbytes)
         endata = des.encrypt(databytes)
         result = endata.hex()
-    if type == 2:  #解密
+    if type == 2:  # 解密
         des = DES3.new(Keybytes, DES.MODE_CBC, ivbytes)
         dedata = des.decrypt(databytes)
         result = dedata.hex()
     return result
 
-#字符串进行异或
-def stringxor(str1,str2):
-    orxstr=""
-    for i in range(0,len(str1)):
-        val1 = int(list(str1)[i],16)
-        val2 = int(list(str2)[i],16)
-        rst = str(hex(val1^val2))
+
+# 字符串进行异或
+def stringxor(str1, str2):
+    orxstr = ""
+    for i in range(0, len(str1)):
+        val1 = int(list(str1)[i], 16)
+        val2 = int(list(str2)[i], 16)
+        rst = str(hex(val1 ^ val2))
         rst = rst[2]
-        orxstr = orxstr+rst
+        orxstr = orxstr + rst
     return orxstr
 
-#字符串取反
+
+# 字符串取反
 def stringnot(str):
-    orxstr=""
+    orxstr = ""
     for i in range(0, len(str)):
         vall1 = int(list(str)[i], 16)
         rst = (~vall1) & 0x0f
@@ -238,21 +251,22 @@ def stringnot(str):
         orxstr = orxstr + rst
     return orxstr
 
-#3DES计算MAC
-def DES3MAC(data, protectKey,iv,maclen):
-    if (len(protectKey)/2) % 16 != 0:
-        raise wdalgerr("Incorrect 3des key length (%d bytes)" % (len(protectKey)/2))
-    if (len(iv)/2) % 8 != 0:
-        raise wdalgerr("Incorrect 3des iv length (%d bytes)" % (len(iv)/2))
+
+# 3DES计算MAC
+def DES3MAC(data, protectKey, iv, maclen):
+    if (len(protectKey) / 2) % 16 != 0:
+        raise wdalgerr("Incorrect 3des key length (%d bytes)" % (len(protectKey) / 2))
+    if (len(iv) / 2) % 8 != 0:
+        raise wdalgerr("Incorrect 3des iv length (%d bytes)" % (len(iv) / 2))
     if protectKey[:16] == protectKey[16:32] or protectKey[-32:-16] == protectKey[-16:]:
         raise wdalgerr("Triple DES key degenerates to single DES")
-    if (len(data) / 2) % 8 == 0:  #最后一包为8字节，则补
+    if (len(data) / 2) % 8 == 0:  # 最后一包为8字节，则补
         data = data + "8000000000000000"
-    if (len(data)/2) % 8 != 0:   #最后一包不为8字节，则补8000至8字节
+    if (len(data) / 2) % 8 != 0:  # 最后一包不为8字节，则补8000至8字节
         data = data + "80"
-        while (len(data)/2) % 8 != 0:
+        while (len(data) / 2) % 8 != 0:
             data += "00"
-            if (len(data)/2) % 8 == 0:
+            if (len(data) / 2) % 8 == 0:
                 break
 
     databytes = bytes.fromhex(data)
@@ -262,15 +276,16 @@ def DES3MAC(data, protectKey,iv,maclen):
     endata = des.encrypt(databytes)
     strendata = endata.hex()
     strdata = strendata[-16:]
-    desmac = strdata[:2*maclen]
+    desmac = strdata[:2 * maclen]
     return desmac
 
-#DES计算MAC
+
+# DES计算MAC
 def DESMAC(data, protectKey, iv, maclen):
-    if (len(protectKey)/2) % 8 != 0:
-        raise wdalgerr("Incorrect des key length (%d bytes)" % (len(protectKey)/2))
-    if (len(iv)/2) % 8 != 0:
-        raise wdalgerr("Incorrect des iv length (%d bytes)" % (len(iv)/2))
+    if (len(protectKey) / 2) % 8 != 0:
+        raise wdalgerr("Incorrect des key length (%d bytes)" % (len(protectKey) / 2))
+    if (len(iv) / 2) % 8 != 0:
+        raise wdalgerr("Incorrect des iv length (%d bytes)" % (len(iv) / 2))
     if (len(data) / 2) % 8 == 0:  # 最后一包为8字节，则补
         data = data + "8000000000000000"
         data = data + "80"
@@ -290,19 +305,19 @@ def DESMAC(data, protectKey, iv, maclen):
     return desmac
 
 
-#3DES计算MAC
-def AESMAC(data, protectKey,iv,maclen):
-    if (len(protectKey)/2) % 16 != 0:
-        raise wdalgerr("Incorrect AES key length (%d bytes)" % (len(protectKey)/2))
-    if (len(iv)/2) % 16 != 0:
-        raise wdalgerr("Incorrect AES iv length (%d bytes)" % (len(iv)/2))
-    if (len(data) / 2) % 16 == 0:  #最后一包为8字节，则补
+# 3DES计算MAC
+def AESMAC(data, protectKey, iv, maclen):
+    if (len(protectKey) / 2) % 16 != 0:
+        raise wdalgerr("Incorrect AES key length (%d bytes)" % (len(protectKey) / 2))
+    if (len(iv) / 2) % 16 != 0:
+        raise wdalgerr("Incorrect AES iv length (%d bytes)" % (len(iv) / 2))
+    if (len(data) / 2) % 16 == 0:  # 最后一包为8字节，则补
         data = data + "8000000000000000"
-    if (len(data)/2) % 16 != 0:   #最后一包不为8字节，则补8000至8字节
+    if (len(data) / 2) % 16 != 0:  # 最后一包不为8字节，则补8000至8字节
         data = data + "80"
-        while (len(data)/2) % 16 != 0:
+        while (len(data) / 2) % 16 != 0:
             data += "00"
-            if (len(data)/2) % 16 == 0:
+            if (len(data) / 2) % 16 == 0:
                 break
 
     databytes = bytes.fromhex(data)
@@ -312,28 +327,28 @@ def AESMAC(data, protectKey,iv,maclen):
     endata = aes.encrypt(databytes)
     strendata = endata.hex()
     strdata = strendata[-32:]
-    aesmac = strdata[:2*maclen]
+    aesmac = strdata[:2 * maclen]
     return aesmac
 
 
-#RSA算法公钥加密
-def RSAencryptPublic(data,n,e="010001"):
-    RsaID = "300d06092a864886f70d0101010500" #RSA的算法标识
-    if len(n)/2 ==128: #rsa1024
+# RSA算法公钥加密
+def RSAencryptPublic(data, n, e="010001"):
+    RsaID = "300d06092a864886f70d0101010500"  # RSA的算法标识
+    if len(n) / 2 == 128:  # rsa1024
         if n[0:2] > "80":
             pubkey = "00" + n
-            publickey ="30819f"+ RsaID+"03818d00308189028181"+pubkey+"0203"+e
+            publickey = "30819f" + RsaID + "03818d00308189028181" + pubkey + "0203" + e
 
         if n[0:2] < "80":
-           publickey ="30819e"+ RsaID+"03818c00308188028180"+n+"0203"+e
+            publickey = "30819e" + RsaID + "03818c00308188028180" + n + "0203" + e
 
     if len(n) / 2 == 256:  # rsa2048
         if n[0:2] > "80":
             pubkey = "00" + n
-            publickey ="30820122"+ RsaID+"0382010f003082010a02820101"+pubkey+"0203"+e
+            publickey = "30820122" + RsaID + "0382010f003082010a02820101" + pubkey + "0203" + e
 
         if n[0:2] < "80":
-           publickey ="30820121"+ RsaID+"0382010e003082010902820100"+n+"0203"+e
+            publickey = "30820121" + RsaID + "0382010e003082010902820100" + n + "0203" + e
 
     public_keyBytes = bytes.fromhex(publickey)
     public = RSA.importKey(public_keyBytes)  # 导入读取到的公钥
@@ -344,23 +359,23 @@ def RSAencryptPublic(data,n,e="010001"):
 
 
 # RSA算法公钥验签
-def RSAverifyPublic(data,signdata,n,h,e="010001"):
-    RsaID = "300d06092a864886f70d0101010500" #RSA的算法标识
-    if len(n)/2 ==128: #rsa1024
+def RSAverifyPublic(data, signdata, n, h, e="010001"):
+    RsaID = "300d06092a864886f70d0101010500"  # RSA的算法标识
+    if len(n) / 2 == 128:  # rsa1024
         if n[0:2] > "80":
             pubkey = "00" + n
-            publickey ="30819f"+ RsaID+"03818d00308189028181"+pubkey+"0203"+e
+            publickey = "30819f" + RsaID + "03818d00308189028181" + pubkey + "0203" + e
 
         if n[0:2] < "80":
-           publickey ="30819e"+ RsaID+"03818c00308188028180"+n+"0203"+e
+            publickey = "30819e" + RsaID + "03818c00308188028180" + n + "0203" + e
 
     if len(n) / 2 == 256:  # rsa2048
         if n[0:2] > "80":
             pubkey = "00" + n
-            publickey ="30820122"+ RsaID+"0382010f003082010a02820101"+pubkey+"0203"+e
+            publickey = "30820122" + RsaID + "0382010f003082010a02820101" + pubkey + "0203" + e
 
         if n[0:2] < "80":
-           publickey ="30820121"+ RsaID+"0382010e003082010902820100"+n+"0203"+e
+            publickey = "30820121" + RsaID + "0382010e003082010902820100" + n + "0203" + e
 
     public_keyBytes = bytes.fromhex(publickey)
     public = RSA.importKey(public_keyBytes)  # 导入读取到的公钥
@@ -377,10 +392,11 @@ def RSAverifyPublic(data,signdata,n,h,e="010001"):
         verdata = verifier.verify(SHA512.new(a2b_hex(data)), a2b_hex(signdata))
     return verdata
 
-#公钥运算
-def RSApubilc(data,n,e):
-    if (len(n)/2) % 128 != 0 :
-        raise ValueError("Incorrect RSA pubilc key length (%d bytes)" % (len(n)/2))
+
+# 公钥运算
+def RSApubilc(data, n, e):
+    if (len(n) / 2) % 128 != 0:
+        raise ValueError("Incorrect RSA pubilc key length (%d bytes)" % (len(n) / 2))
     dlla = windll.LoadLibrary("RSA.dll")
     # 参数1：data转换n
     data1 = c_char_p(data.encode("utf8"))
@@ -388,13 +404,13 @@ def RSApubilc(data,n,e):
     n1 = c_char_p(n.encode("utf8"))
     # 参数3：公钥e转换
     e1 = c_char_p(e.encode("utf8"))
-    #参数4：outdata
+    # 参数4：outdata
     if len(n) / 2 == 128:  # rsa1024
         outdata = create_string_buffer(256)
     if len(n) / 2 == 256:  # rsa1024
         outdata = create_string_buffer(512)
 
-    #调动态库的接口
+    # 调动态库的接口
     result = dlla.RSAPublic(n1, e1, data1, outdata)
 
     if result == 0:
@@ -406,11 +422,11 @@ def RSApubilc(data,n,e):
 
 
 # 私钥运算
-def RSAPrivate(data,n,d):
-    if (len(n)/2) % 128 != 0 :
-        raise ValueError("Incorrect RSA pubilc key length (%d bytes)" % (len(n)/2))
-    if (len()/2) % 128 != 0 :
-        raise ValueError("Incorrect RSA Private key length (%d bytes)" % (len(n)/2))
+def RSAPrivate(data, n, d):
+    if (len(n) / 2) % 128 != 0:
+        raise ValueError("Incorrect RSA pubilc key length (%d bytes)" % (len(n) / 2))
+    if (len() / 2) % 128 != 0:
+        raise ValueError("Incorrect RSA Private key length (%d bytes)" % (len(n) / 2))
     dlla = windll.LoadLibrary("RSA.dll")
     # 参数1：data转换
     data1 = c_char_p(data.encode("utf8"))
@@ -424,7 +440,7 @@ def RSAPrivate(data,n,d):
     if len(n) / 2 == 256:  # rsa1024
         outdata = create_string_buffer(512)
 
-    #调动态库的接口
+    # 调动态库的接口
     result = dlla.RSAPublic(n1, d1, data1, outdata)
 
     if result == 0:
@@ -451,16 +467,16 @@ def RSAPrivateCRT(data, p, q, dp, dq, Qinv):
     # 参数6：Qinv转换
     Qinv1 = c_char_p(Qinv.encode("utf8"))
 
-    #参数4：outdata
+    # 参数4：outdata
     if len(p) / 2 == 64:  # rsa1024
         outdata = create_string_buffer(256)
     if len(p) / 2 == 128:  # rsa1024
         outdata = create_string_buffer(512)
 
-    #调动态库的接口
-    #result = dlla.RSAPrivateCRT(data1, p1, q1, dp1, dq1, Qinv1, outdata)
+    # 调动态库的接口
+    # result = dlla.RSAPrivateCRT(data1, p1, q1, dp1, dq1, Qinv1, outdata)
     try:
-        result = dlla.RSAPrivateCRT(p1, q1, dp1, dq1, Qinv1,data1, outdata)
+        result = dlla.RSAPrivateCRT(p1, q1, dp1, dq1, Qinv1, data1, outdata)
         print(outdata.raw)
     except Exception as e:
         print("test")
@@ -474,8 +490,211 @@ def RSAPrivateCRT(data, p, q, dp, dq, Qinv):
         return outdata.raw
 
 
+def WSM3(str):
+    if len(str) % 2 != 0:
+        raise wdalgerr("Incorrect  data length")
+    bInput = c_char_p(str.encode("utf8"))
+    str1 = bytes.fromhex(bInput.value.decode("utf8"))
+    iInputlen = c_uint(len(str) // 2)
+    para = create_string_buffer(255)
+    result = dlla.WDSM3(str1, iInputlen, para)
+    Hashdata = para.raw.hex()
+    if result != 0:
+        print('Hash成功')
+        return Hashdata[0:64]
+    else:
+        print('Hash失败')
+        return False
+
+
+def Sm4ECB(data, key, Encryption):
+    if len(data) % 2 != 0:
+        raise wdalgerr("Incorrect  data length")
+    if (len(key) / 2) != 16:
+        raise wdalgerr("Incorrect SM4 key length (%d bytes)" % (len(key) / 2))
+    if (len(data) / 2) % 16 != 0:
+        data = data + "80"
+        while (len(data) / 2) % 16 != 0:
+            bInput += "00"
+            if (len(data) / 2) % 16 == 0:
+                break
+    para1 = c_char_p(data.encode("utf8"))
+    bInput = bytes.fromhex(para1.value.decode("utf8"))
+    iInputlen = c_uint(len(data) // 2)
+    bOutput = create_string_buffer(255)
+    para4 = c_char_p(key.encode("utf8"))
+    bkey = bytes.fromhex(para4.value.decode("utf8"))
+    isEncryption = c_uint(Encryption)
+    result = dlla.WDSM4ECB(bInput, iInputlen, bOutput, bkey, isEncryption)
+    strEncry = bOutput.raw.hex()
+    Encrydata = strEncry[0:len(data)]
+    if result != 0:
+        print('加密成功')
+        return Encrydata
+    else:
+        print('加密失败')
+        return False
+
+
+def Sm4CBC(data, key, Iv, Encryption):
+    if len(data) % 2 != 0:
+        raise wdalgerr("Incorrect  data length")
+    if (len(Iv) / 2) != 16:
+        raise wdalgerr("Incorrect SM4 iv length (%d bytes)" % (len(Iv) / 2))
+    if (len(key) / 2) != 16:
+        raise wdalgerr("Incorrect SM4 key length (%d bytes)" % (len(key) / 2))
+    if (len(data) / 2) % 16 != 0:
+        data = data + "80"
+        while (len(data) / 2) % 16 != 0:
+            data += "00"
+            if (len(data) / 2) % 16 == 0:
+                break
+    Input = c_char_p(data.encode("utf8"))
+    bInput = bytes.fromhex(Input.value.decode("utf8"))
+    iInputlen = c_uint(len(data) // 2)
+    bOutput = create_string_buffer(255)
+    para4 = c_char_p(key.encode("utf8"))
+    bkey = bytes.fromhex(para4.value.decode("utf8"))
+    IVpara = c_char_p(Iv.encode("utf8"))
+    bIV = bytes.fromhex(IVpara.value.decode("utf8"))
+    isEncryption = c_uint(Encryption)
+    result = dlla.WDSM4CBC(bInput, iInputlen, bOutput, bkey, bIV, isEncryption)
+    strEencry = bOutput.raw.hex()
+    Eencrydata = strEencry[0:len(data)]
+    if result != 0:
+        print('加密成功')
+        return Eencrydata
+    else:
+        print('加密失败')
+        return False
+
+
+def SM2Encry(SourceData, pk, k):
+    if len(SourceData) % 2 != 0:
+        raise wdalgerr("Incorrect  SourceData length")
+    if len(k) % 2 != 0:
+        raise wdalgerr("Incorrect  k length")
+    if (len(pk) / 2) != 64:
+        raise wdalgerr("Incorrect SM2 key length (%d bytes)" % (len(pk) / 2))
+    iMsgLen = c_uint(len(SourceData))
+    strPkx = c_char_p(pk[0:64].encode("utf8"))
+    strPky = c_char_p(pk[64:129].encode("utf8"))
+    strMsg = c_char_p(SourceData.encode("utf8"))
+    strK = c_char_p(k.encode("utf8"))
+    bOutput = create_string_buffer(255)
+    result = dlla.WDSM2ENCRYPT(strPkx, strPky, strMsg, iMsgLen, strK, bOutput)
+    strEencry = bOutput.raw.hex()
+    Eencrydata = strEencry[0:192 + len(SourceData)]
+    if result != 0:
+        print('加密成功')
+        return Eencrydata
+    else:
+        print('加密失败')
+        return False
+
+
+def SM2Decry(sk, data):
+    if (len(sk) / 2) != 32:
+        raise wdalgerr("Incorrect SM2 key length (%d bytes)" % (len(sk) / 2))
+    if len(data) % 2 != 0:
+        raise wdalgerr("Incorrect  data length")
+    strSk = c_char_p(sk.encode("utf8"))
+    strMsg = c_char_p(data.encode("utf8"))
+    iMsgLen = c_uint(len(data))
+    Output = create_string_buffer(500)
+    result = dlla.WDSM2DECRYPT(strSk, strMsg, iMsgLen, Output)
+    strDencry = Output.raw.hex()
+    Dencrydata = strDencry[0:len(SourceData) - 2]
+    if result != 0:
+        print('解密成功')
+        return Dencrydata
+    else:
+        print('解密失败')
+        return False
+
+
+def SM2Sign(sk, data, k):
+    if (len(sk) / 2) != 32:
+        raise wdalgerr("Incorrect SM2 key length (%d bytes)" % (len(sk) / 2))
+    if len(data) % 2 != 0:
+        raise wdalgerr("Incorrect  data length")
+    if len(k) % 2 != 0:
+        raise wdalgerr("Incorrect  k length")
+    strSk = c_char_p(sk.encode("utf8"))
+    strMsg = c_char_p(data.encode("utf8"))
+    iMsgLen = c_uint(len(data))
+    ENTL = c_uint(iENTL)
+    IDpara = c_char_p(strId.encode("utf8"))
+    strK = c_char_p(k.encode("utf8"))
+    OutputR = create_string_buffer(255)
+    OutputS = create_string_buffer(255)
+    dlla.WDSM2SIGN(strSk, strMsg, iMsgLen, ENTL, IDpara, strK, OutputR, OutputS)
+    RS = OutputR.value.hex() + OutputS.value.hex()
+    return RS
+
+
+def SM2Verify(data, pk, strRS):
+    if len(data) % 2 != 0:
+        raise wdalgerr("Incorrect  data length")
+    if len(strRS) % 2 != 0:
+        raise wdalgerr("Incorrect  strRS length")
+    if (len(pk) / 2) != 64:
+        raise wdalgerr("Incorrect SM2 key length (%d bytes)" % (len(pk) / 2))
+    iMsgLen = c_uint(len(data))
+    strPkx = c_char_p(pk[0:64].encode("utf8"))
+    strPky = c_char_p(pk[64:129].encode("utf8"))
+    strMsg = c_char_p(data.encode("utf8"))
+    ENTL = c_uint(iENTL)
+    IDpara = c_char_p(strId.encode("utf8"))
+    strR = c_char_p(strRS[0:64].encode("utf8"))
+    strS = c_char_p(strRS[64:129].encode("utf8"))
+    OutputR = create_string_buffer(255)
+    result = dlla.WDSM2VERIFY(strPkx, strPky, strMsg, iMsgLen, ENTL, IDpara, strR, strS, OutputR)
+    if result != 0:
+        print('验签成功')
+        return OutputR.value.hex()
+    else:
+        print('验签失败')
+
+
+def SM4_MAC(Data, ProtectKey, Init, iLen):
+    if iLen != 8 and iLen != 16:
+        raise wdalgerr("Incorrect length (%d bytes)" % iLen)
+        return 0
+
+    result = Sm4CBC(Data, ProtectKey, Init, 1)
+    print(result)
+    response = result[-32:iLen]
+    return response
+
+
 if __name__ == '__main__':
-    # a = AESMAC("1122334455667788", "112233445566778811223344556677", "00000000000000000000000000000000",4)
+    strId = '1234567812345678'
+    iENTL = 16
+    dlla = windll.LoadLibrary("WdSmAlg.dll")
+    if dlla == 0:
+        print("调库失败")
+    else:
+        print("调库成功")
+    # print(WSM3('1122'))
+    # print(Sm4ECB('11223344556677881122334455667788112233445566778811223344556677881122334455667788112233445566778811223344556677881122334455667788','11223344556677881122334455667788', 2))
+    # print(Sm4CBC('1122334455667788', '11223344556677881122334455667788', '11223344556677881122334455667788', 2))
+    # SourceData = '2221111111111111111111111111551111111111111111111111111111111111'
+    # strR = SM2Encry(SourceData,'ec91818de0b7012173f51c3375436e43b6a9a26abd6dbcb79f851cdeaf7a0f6ccbf4b5a15fb87e60fc0b3a923d12e866364a935ffb30842bc9139ebd2ddce961', '4C62EEFD6ECFC2B95B92FD6C3D9575148AFA17425546D49018E5388D49DD7B4F')
+    # print(strR)
+    # str = SM2Decry('c56a2b58a094ef2441037945bab1398cc0df9fc4f99e9a602cd86fc2c388ad0c', strR)
+    # print(str)
+    strRS = SM2Sign('c56a2b58a094ef2441037945bab1398cc0df9fc4f99e9a602cd86fc2c388ad0c',
+                    '2221111111111111111111111111551111111111111111111111111111111111',
+                    '4C62EEFD6ECFC2B95B92FD6C3D9575148AFA17425546D49018E5388D49DD7B4F')
+    strR = SM2Verify('2221111111111111111111111111551111111111111111111111111111111111',
+                     'ec91818de0b7012173f51c3375436e43b6a9a26abd6dbcb79f851cdeaf7a0f6ccbf4b5a15fb87e60fc0b3a923d12e866364a935ffb30842bc9139ebd2ddce961',
+                     strRS)
+    print(strRS)
+    print(strR)
+    data = SM4_MAC('1122334455667788', '11223344556677881122334455667788', '00000000000000000000000000000000', 8)
+    print(data)
+    # a = AESMAC("1122334455667788", "11223344556677881122334455667788", "00000000000000000000000000000000",4)
     # print(a)
     a = RSAPrivateCRT(
         "6F4BB144FA1FBFD43B9C9D760B943648FDC0711E1244745083BE7C3D8A9396B30640D8F3758AD7ABF04CA1B9FDE3FD107DD3482814B07421D60F0732101AD07B653B53F9550E5990448C93823109D41E8E0C6CFF0B1CC706C1C9B3D5537E7D3F332AA3F766DC42633E4C3512E37FA1E21A4919C73F0D5B04340282DB18A93F09",
@@ -495,10 +714,10 @@ if __name__ == '__main__':
     print(a)
     a = DESMAC("1122334455667788", "112233445566778899", "0000000000000000",4)
     print(a)
- 
+
     a =DES3MAC("112233", "11223344556677881122334455667799",  "11223344556677880000000000000000", 4)
     print(a)
-    
+
     a = DES3CBC("112233", "11223344556677881122334455667799", 1, "1122334455667788112233445566778899")
     a = AESCBC("112233", "11223344556677881122334455667788", 1, "1122334455667788112233445566778899")
     a = AESECB("112233", "1122334455667788112233445566778899", 1)

@@ -14,7 +14,6 @@ class SubTest(ArgonTest):
     def test_standard_skip_procedure(self):
         self.skipTest('Skip Test')
 
-
     def test_standard_blank_procedure(self):
         self.begintrans('Blank Transcation')
 

@@ -32,7 +32,7 @@ class USBCOMReader(ArgonDevice):
                 self.dll.ICC_set_NAD(self.hDev,nad)
                 return label_pass
         except Exception:
-            raise DeviceError('Open ' + port + 'Failed')
+            raise DeviceError('Open ' + port + ' Failed')
 
     @recordreset
     def reset(self):
