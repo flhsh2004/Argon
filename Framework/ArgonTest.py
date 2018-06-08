@@ -52,9 +52,10 @@ class ArgonTest(unittest.TestCase):
             savecaselog()
             raise
         else:
-            # TODO 此处有BUG
-            if not savecaselog():
+            if not getcasepass():
                 self.fail('Case [' + self._testMethodName + '] Failed. Please Check Case Log!')
+        finally:
+            savecaselog()
 
     @staticmethod
     def begintrans(msg):

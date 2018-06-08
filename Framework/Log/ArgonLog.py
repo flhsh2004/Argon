@@ -31,6 +31,10 @@ def initlog(name):
     log_all.clear()
 
 
+def getcasepass():
+    return casepass
+
+
 def savecaselog():
     """保存log并清空临时变量"""
     global casename
@@ -42,12 +46,9 @@ def savecaselog():
     except Exception:
         raise Exception('Log Save Error')
     finally:
-        casestatus = casepass
-
         log_all.clear()
         casename = ''
         casepass = True
-        return casestatus
 
 
 def translog(status, msg=''):
