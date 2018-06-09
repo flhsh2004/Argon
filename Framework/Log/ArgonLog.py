@@ -9,6 +9,8 @@ casepass = True
 casename = ''
 # 日志存放位置
 logdir = 'Src\\test'
+# 项目位置
+projectdir = ''
 
 # 存储各个节点状态
 label_pass = 'Pass'
@@ -28,10 +30,19 @@ def initlog(name):
     """初始化log存储名"""
     global casename
     global casepass
+    global projectdir
 
     casepass = True
     casename = name
     log_all.clear()
+
+    ipath = os.getcwd().find(logdir)
+    if ipath > 0:
+        projectdir = os.getcwd()[:ipath]
+    else:
+        projectdir = os.path.abspath('..') + '\\'
+
+    return projectdir
 
 
 def getcasepass():
@@ -42,11 +53,9 @@ def savecaselog():
     """保存log并清空临时变量"""
     global casename
     global casepass
+    global projectdir
     try:
-        workdir = os.getcwd()
-        workdir = workdir[:workdir.find(logdir)]
-
-        stream = open(workdir + 'Log\\' + casename + '.yml', 'w')
+        stream = open(projectdir + 'Log\\' + casename + '.yml', 'w')
         yaml.dump(log_all, stream)
         stream.close()
     except Exception:
@@ -55,6 +64,7 @@ def savecaselog():
         log_all.clear()
         casename = ''
         casepass = True
+        projectdir = ''
 
 
 def translog(status, msg=''):

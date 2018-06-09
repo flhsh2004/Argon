@@ -1,0 +1,29 @@
+- level: '1'
+  module:
+  - level: '2'
+    list:
+    - {level: '3', msg: Open Generic Usb Smart Card Reader 0, status: Pass}
+    msg: Connect Device
+    status: Pass
+  msg: Establish Context
+  status: Pass
+- level: '1'
+  module:
+  - level: '2'
+    list:
+    - {level: '3', msg: 'ATR:3B6D00005744604B688693080000000000', status: Pass}
+    - {a-SW: 614C, a-recv: '', level: '3', msg: Unnamed Command, r-SW: '', r-recv: '',
+      send: 00A4040007A0000003330101, status: Pass}
+    msg: Select Process
+    status: Pass
+  msg: Standard Transcation
+  status: Pass
+- level: '1'
+  module:
+  - level: '2'
+    list:
+    - {level: '3', msg: Close Port, status: Pass}
+    msg: Disconnect Device
+    status: Pass
+  msg: Release Context
+  status: Pass

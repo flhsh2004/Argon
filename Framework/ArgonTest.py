@@ -7,14 +7,11 @@ from ArgonLog import *
 
 class ArgonTest(unittest.TestCase):
     def setUp(self):
-        initlog(self._testMethodName)
+        projectpath = initlog(self._testMethodName)
         translog('Info', 'Establish Context')
 
         try:
-            workdir = os.getcwd()
-            workdir = workdir[:workdir.find(logdir)]
-
-            stream = open(workdir + 'Config\\device.yml', 'r')
+            stream = open(projectpath + 'Config\\device.yml', 'r')
             data = yaml.load(stream)
             stream.close()
 
@@ -23,7 +20,6 @@ class ArgonTest(unittest.TestCase):
         except Exception:
             savecaselog()
             raise
-
 
     def tearDown(self):
         if not self._outcome.errors[-1][1] is None:

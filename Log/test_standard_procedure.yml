@@ -15,7 +15,7 @@
     - {a-value: '111', level: '3', msg: Match Test, r-value: '111', status: Pass}
     - {a-value: '111', level: '3', msg: Match Test, r-value: '123', status: Fail}
     - {a-value: '111', level: '3', msg: Unnamed Match, r-value: '111', status: Pass}
-    - a-SW: 6A82
+    - a-SW: 614C
       a-recv: ''
       level: '3'
       msg: Unnamed Command
@@ -23,21 +23,21 @@
       r-recv: 6F0A8408A000000333010101
       send: 00A4040007A0000003330101
       status: Fail
-    - a-SW: 6A82
+    - a-SW: 614C
       a-recv: ''
       level: '3'
       msg: Unnamed Command
       r-SW: [6A83, 6A82]
       r-recv: ''
       send: 00A4040007A0000003330101
-      status: Pass
-    - {a-SW: 6A82, a-recv: '', level: '3', msg: Unnamed Command, r-SW: '', r-recv: 6F0A8408A000000333010101,
+      status: Fail
+    - {a-SW: 614C, a-recv: '', level: '3', msg: Unnamed Command, r-SW: '', r-recv: 6F0A8408A000000333010101,
       send: 00A4040007A0000003330101, status: Fail}
-    - {a-SW: 6A82, a-recv: '', level: '3', msg: Unnamed Command, r-SW: '', r-recv: '',
+    - {a-SW: 614C, a-recv: '', level: '3', msg: Unnamed Command, r-SW: '', r-recv: '',
       send: 00A4040007A0000003330101, status: Pass}
-    - {a-SW: 6A82, a-recv: '', level: '3', msg: Select Cmd, r-SW: '', r-recv: '',
+    - {a-SW: 614C, a-recv: '', level: '3', msg: Select Cmd, r-SW: '', r-recv: '',
       send: 00A4040007A0000003330101, status: Pass}
-    - a-SW: 6A82
+    - a-SW: 614C
       a-recv: ''
       level: '3'
       msg: Select Cmd
@@ -45,15 +45,15 @@
       r-recv: 6F0A8408A000000333010101
       send: 00A4040007A0000003330101
       status: Fail
-    - a-SW: 6A82
+    - a-SW: 614C
       a-recv: ''
       level: '3'
       msg: Select Cmd
       r-SW: ['9000', 6A82]
       r-recv: ''
       send: 00A4040007A0000003330101
-      status: Pass
-    - {a-SW: 6A82, a-recv: '', level: '3', msg: Select Cmd, r-SW: '', r-recv: 6F0A8408A000000333010102,
+      status: Fail
+    - {a-SW: 614C, a-recv: '', level: '3', msg: Select Cmd, r-SW: '', r-recv: 6F0A8408A000000333010102,
       send: 00A4040007A0000003330101, status: Fail}
     - {a-value: '111', level: '3', msg: Unnamed Match, r-value: '123', status: Fail}
     msg: Select Process

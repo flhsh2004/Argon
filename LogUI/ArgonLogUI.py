@@ -92,7 +92,7 @@ if __name__ == '__main__':
     error_image = importimage(r'Pic/error.png')
     skip_image = importimage(r'Pic/skip.png')
 
-    for i ,yml in enumerate(os.listdir(r'../Log')):
+    for i, yml in enumerate(os.listdir(r'../Log')):
         stream = open(r'../Log/' + yml, 'r')
         data = yaml.load(stream)
         stream.close()
