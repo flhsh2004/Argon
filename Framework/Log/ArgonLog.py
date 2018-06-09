@@ -1,4 +1,5 @@
 import yaml
+import os
 
 # 存储单个脚本的日志内容
 log_all = []
@@ -6,6 +7,8 @@ log_all = []
 casepass = True
 # 单个脚本名称
 casename = ''
+# 日志存放位置
+logdir = 'Src\\test'
 
 # 存储各个节点状态
 label_pass = 'Pass'
@@ -40,7 +43,10 @@ def savecaselog():
     global casename
     global casepass
     try:
-        stream = open(r'../Log/' + casename + '.yml', 'w')
+        workdir = os.getcwd()
+        workdir = workdir[:workdir.find(logdir)]
+
+        stream = open(workdir + 'Log\\' + casename + '.yml', 'w')
         yaml.dump(log_all, stream)
         stream.close()
     except Exception:

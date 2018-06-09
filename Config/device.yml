@@ -1,3 +1,5 @@
+- type: PCSC
+  port: Generic Usb Smart Card Reader 0
 - type: USB
   port: USB1
 - type: PCSC

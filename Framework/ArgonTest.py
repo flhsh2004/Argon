@@ -11,7 +11,10 @@ class ArgonTest(unittest.TestCase):
         translog('Info', 'Establish Context')
 
         try:
-            stream = open(r'../Config/device.yml', 'r')
+            workdir = os.getcwd()
+            workdir = workdir[:workdir.find(logdir)]
+
+            stream = open(workdir + 'Config\\device.yml', 'r')
             data = yaml.load(stream)
             stream.close()
 
