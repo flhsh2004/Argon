@@ -14,6 +14,8 @@
     - {level: '3', msg: 'ATR:3B6D00005744604B688693080000000000', status: Pass}
     - {a-SW: 614C, a-recv: '', level: '3', msg: Unnamed Command, r-SW: '', r-recv: '',
       send: 00A4040007A0000003330101, status: Pass}
+    - {a-SW: '9000', a-recv: 6F4A8408A000000333010101A53E500A50424F432044454249548701019F38099F7A019F02065F2A025F2D027A689F1101019F120A50424F43204445424954BF0C0A9F4D020B0ADF4D020C0A,
+      level: '3', msg: Get Response, r-SW: '', r-recv: '', send: 00C000004C, status: Pass}
     msg: Select Process
     status: Pass
   msg: Standard Transcation

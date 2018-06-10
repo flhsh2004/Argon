@@ -1,5 +1,6 @@
 from ArgonLog import translog, label_error
 
+
 class DeviceError(Exception):
     def __init__(self, *args):
         translog(label_error, args[0])
@@ -40,15 +41,19 @@ class ArgonDevice(object):
         pass
 
     @staticmethod
-    def checkrespdata(actualdata, expectdata):
-        if (expectdata != '') & (expectdata != actualdata):
+    def checkrespdata(actualdata, expectdata, actualsw):
+        if actualsw[:2] == '61' or actualsw[:2] == '6C':
+            return True
+        elif (expectdata != '') & (expectdata != actualdata):
             return False
         else:
             return True
 
     @staticmethod
     def checksw(actualsw, expectsw):
-        if isinstance(expectsw, list):
+        if expectsw == '' or actualsw[:2] == '61' or actualsw[:2] == '6C':
+            return True
+        elif isinstance(expectsw, list):
             for sw_param in expectsw:
                 if sw_param == actualsw:
                     return True
@@ -58,6 +63,9 @@ class ArgonDevice(object):
         else:
             raise SWError('Wrong Expect SW')
         return False
+
+    def checkdata(self, actualsw, expectsw, actualdata, expectdata):
+        return self.checkrespdata(actualdata, expectdata, actualsw) and self.checksw(actualsw, expectsw)
 
     '''
     @staticmethod

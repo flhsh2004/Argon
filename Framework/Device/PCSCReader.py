@@ -53,14 +53,19 @@ class PCSCReader(ArgonDevice):
 
         else:
             if 'expect_data' in kwargs.keys():
-                if not self.checkrespdata(rtn_data, kwargs['expect_data']):
-                    status = label_fail
+                expect_data = kwargs['expect_data']
+            else:
+                expect_data = ''
 
             if 'sw' in kwargs.keys():
-                if not self.checksw(rtn_sw, kwargs['sw']):
-                    status = label_fail
+                expect_sw = kwargs['sw']
+            else:
+                expect_sw = ''
 
-            return rtn_data, rtn_sw, status
+            if not self.checkdata(rtn_sw, expect_sw, rtn_data, expect_data):
+                status = label_fail
+
+        return rtn_data, rtn_sw, status
 
     @recordclose
     def closeport(self):

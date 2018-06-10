@@ -234,7 +234,21 @@ def recordapdu(func):
         else:
             expect_sw = ''
 
-        matchlog(status, msg, args[1], rtn_data, expect_data, rtn_sw, expect_sw)
+        # TODO 加入61XX和6CXX的情况
+        if rtn_sw[:2] == '61':
+            # 修改原始指令参数，去掉期望sw和resp
+            matchlog(status, msg, args[1], rtn_data, '', rtn_sw, '')
+
+            apdu = '00C00000'+rtn_sw[2:]
+            newmsg = 'Get Response'
+            rtn_data, rtn_sw, status = func(args[0], apdu, newmsg, expect_data=expect_data, sw=expect_sw)
+
+            matchlog(status, newmsg, apdu, rtn_data, expect_data, rtn_sw, expect_sw)
+        elif rtn_sw[:2] == '6C':
+            matchlog(status, msg, args[1], rtn_data, expect_data, rtn_sw, expect_sw)
+        else:
+            matchlog(status, msg, args[1], rtn_data, expect_data, rtn_sw, expect_sw)
+
     return wrapper
 
 

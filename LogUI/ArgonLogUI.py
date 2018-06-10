@@ -64,7 +64,7 @@ if __name__ == '__main__':
     tree = ttk.Treeview(frame, show='tree')
 
     ysb = ttk.Scrollbar(tree, orient="vertical", command=tree.yview)
-    xsb = ttk.Scrollbar(window, orient="horizontal", command=tree.xview)
+    xsb = ttk.Scrollbar(tree, orient="horizontal", command=tree.xview)
     tree.configure(yscroll=ysb.set, xscroll=xsb.set)
 
     tree.pack(fill=BOTH, expand=True)
