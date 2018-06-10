@@ -51,7 +51,7 @@ if __name__ == '__main__':
     window = Tk()
     window.title('Argon Log')
     # 窗口大小
-    width, height = 600, 600
+    width, height = 1024, 800
     # 窗口居中显示
     window.geometry('%dx%d+%d+%d' % (width, height, (window.winfo_screenwidth() - width) / 2, (window.winfo_screenheight() - height) / 2))
     window.resizable(0, 0)
@@ -59,17 +59,18 @@ if __name__ == '__main__':
 
     popmenu = TreePopMenu()
 
-    frame = LabelFrame(window, height=500, width=500)
+    frame = LabelFrame(window)
     frame.pack(fill=BOTH, expand=True)
     tree = ttk.Treeview(frame, show='tree')
+    tree.column("#0", minwidth=4096, stretch=True)
 
-    ysb = ttk.Scrollbar(tree, orient="vertical", command=tree.yview)
     xsb = ttk.Scrollbar(tree, orient="horizontal", command=tree.xview)
-    tree.configure(yscroll=ysb.set, xscroll=xsb.set)
+    ysb = ttk.Scrollbar(tree, orient="vertical", command=tree.yview)
+    tree.configure(xscrollcommand=xsb.set, yscrollcommand=ysb.set)
 
-    tree.pack(fill=BOTH, expand=True)
     ysb.pack(fill=Y, side=RIGHT)
     xsb.pack(fill=X, side=BOTTOM)
+    tree.pack(fill=BOTH, expand=True)
 
 
     def rclfun(event):
