@@ -8,7 +8,7 @@ casepass = True
 # 单个脚本名称
 casename = ''
 # 日志存放位置
-logdir = 'Src\\test'
+logdir = 'Test\\Case'
 # 项目位置
 projectdir = ''
 

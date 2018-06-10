@@ -7,7 +7,7 @@ if __name__ == '__main__':
     curfilename = os.path.basename(__file__).split('.')[0]
 
     loader = unittest.TestLoader()
-    suite = loader.discover('..\\Src\\test\\case')
+    suite = loader.discover('..\\Test\\Case')
     '''
     runner = unittest.TextTestRunner(verbosity=1)
     runner.run(suite)
