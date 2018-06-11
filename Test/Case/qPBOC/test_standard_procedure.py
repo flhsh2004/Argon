@@ -2,7 +2,7 @@ from ArgonTest import *
 from ArgonUICS import *
 
 
-class Select6A82(ArgonTest):
+class SelectStandard(ArgonTest):
     def setUp(self):
         super().setUp()
         self.mytest = ArgonUICS(self.device)
