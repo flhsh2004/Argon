@@ -1,6 +1,6 @@
 - type: PCSC
+  port: Identiv uTrust 4700 F CL Reader 1
+- type: PCSC
   port: Generic Usb Smart Card Reader 0
 - type: USB
   port: USB1
-- type: PCSC
-  port: Identiv uTrust 4700 F CL Reader 1

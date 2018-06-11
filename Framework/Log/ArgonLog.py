@@ -210,6 +210,7 @@ def recordreset(func):
             matchlog(status, 'Reconnect Error')
         else:
             raise ArgonLogError('Unkown Status-ATR')
+        return atr
     return wrapper
 
 
@@ -254,6 +255,7 @@ def recordapdu(func):
         else:
             matchlog(status, msg, args[1], rtn_data, expect_data, rtn_sw, expect_sw)
 
+        return rtn_data, rtn_sw
     return wrapper
 
 

@@ -62,7 +62,20 @@ def asciitostr(data):
     return result.upper()
 
 
+# 十六进制字符串返回string型长度
+def strlength(data):
+    ilen = int(len(data) / 2)
+    return bytes((ilen,)).hex().upper()
 
+
+# 返回增加长度的十六进制字符串
+def addlength(data):
+    return strlength(data) + data
+
+
+# 十六进制字符串返回int型长度
+def intlength(data):
+    return int(data, 16) * 2
 
 
 

@@ -51,7 +51,7 @@ if __name__ == '__main__':
     window = Tk()
     window.title('Argon Log')
     # 窗口大小
-    width, height = 1024, 800
+    width, height = 800, 600
     # 窗口居中显示
     window.geometry('%dx%d+%d+%d' % (width, height, (window.winfo_screenwidth() - width) / 2, (window.winfo_screenheight() - height) / 2))
     window.resizable(0, 0)

@@ -2,7 +2,7 @@
   module:
   - level: '2'
     list:
-    - {level: '3', msg: Open Generic Usb Smart Card Reader 0, status: Pass}
+    - {level: '3', msg: Open Identiv uTrust 4700 F CL Reader 1, status: Pass}
     msg: Connect Device
     status: Pass
   msg: Establish Context
@@ -11,73 +11,14 @@
   module:
   - level: '2'
     list:
-    - {level: '3', msg: 'ATR:3B6D00005744604B688693080000000000', status: Pass}
-    - {a-value: '111', level: '3', msg: Match Test, r-value: '111', status: Pass}
-    - {a-value: '111', level: '3', msg: Match Test, r-value: '123', status: Fail}
-    - {a-value: '111', level: '3', msg: Unnamed Match, r-value: '111', status: Pass}
-    - {a-SW: 614C, a-recv: '', level: '3', msg: Unnamed Command, r-SW: '', r-recv: '',
-      send: 00A4040007A0000003330101, status: Pass}
-    - a-SW: '9000'
-      a-recv: 6F4A8408A000000333010101A53E500A50424F432044454249548701019F38099F7A019F02065F2A025F2D027A689F1101019F120A50424F43204445424954BF0C0A9F4D020B0ADF4D020C0A
-      level: '3'
-      msg: Get Response
-      r-SW: ['9000']
-      r-recv: 6F0A8408A000000333010101
-      send: 00C000004C
-      status: Fail
-    - {a-SW: 614C, a-recv: '', level: '3', msg: Unnamed Command, r-SW: '', r-recv: '',
-      send: 00A4040007A0000003330101, status: Pass}
-    - a-SW: '9000'
-      a-recv: 6F4A8408A000000333010101A53E500A50424F432044454249548701019F38099F7A019F02065F2A025F2D027A689F1101019F120A50424F43204445424954BF0C0A9F4D020B0ADF4D020C0A
-      level: '3'
-      msg: Get Response
-      r-SW: [6A83, 6A82]
-      r-recv: ''
-      send: 00C000004C
-      status: Fail
-    - {a-SW: 614C, a-recv: '', level: '3', msg: Unnamed Command, r-SW: '', r-recv: '',
-      send: 00A4040007A0000003330101, status: Pass}
-    - {a-SW: '9000', a-recv: 6F4A8408A000000333010101A53E500A50424F432044454249548701019F38099F7A019F02065F2A025F2D027A689F1101019F120A50424F43204445424954BF0C0A9F4D020B0ADF4D020C0A,
-      level: '3', msg: Get Response, r-SW: '', r-recv: 6F0A8408A000000333010101, send: 00C000004C,
-      status: Fail}
-    - {a-SW: 614C, a-recv: '', level: '3', msg: Unnamed Command, r-SW: '', r-recv: '',
-      send: 00A4040007A0000003330101, status: Pass}
-    - {a-SW: '9000', a-recv: 6F4A8408A000000333010101A53E500A50424F432044454249548701019F38099F7A019F02065F2A025F2D027A689F1101019F120A50424F43204445424954BF0C0A9F4D020B0ADF4D020C0A,
-      level: '3', msg: Get Response, r-SW: '', r-recv: '', send: 00C000004C, status: Pass}
-    - {a-SW: 614C, a-recv: '', level: '3', msg: Select Cmd, r-SW: '', r-recv: '',
-      send: 00A4040007A0000003330101, status: Pass}
-    - {a-SW: '9000', a-recv: 6F4A8408A000000333010101A53E500A50424F432044454249548701019F38099F7A019F02065F2A025F2D027A689F1101019F120A50424F43204445424954BF0C0A9F4D020B0ADF4D020C0A,
-      level: '3', msg: Get Response, r-SW: '', r-recv: '', send: 00C000004C, status: Pass}
-    - {a-SW: 614C, a-recv: '', level: '3', msg: Select Cmd, r-SW: '', r-recv: '',
-      send: 00A4040007A0000003330101, status: Pass}
-    - a-SW: '9000'
-      a-recv: 6F4A8408A000000333010101A53E500A50424F432044454249548701019F38099F7A019F02065F2A025F2D027A689F1101019F120A50424F43204445424954BF0C0A9F4D020B0ADF4D020C0A
-      level: '3'
-      msg: Get Response
-      r-SW: ['9000', 6A82]
-      r-recv: 6F0A8408A000000333010101
-      send: 00C000004C
-      status: Fail
-    - {a-SW: 614C, a-recv: '', level: '3', msg: Select Cmd, r-SW: '', r-recv: '',
-      send: 00A4040007A0000003330101, status: Pass}
-    - a-SW: '9000'
-      a-recv: 6F4A8408A000000333010101A53E500A50424F432044454249548701019F38099F7A019F02065F2A025F2D027A689F1101019F120A50424F43204445424954BF0C0A9F4D020B0ADF4D020C0A
-      level: '3'
-      msg: Get Response
-      r-SW: ['9000', 6A82]
-      r-recv: ''
-      send: 00C000004C
-      status: Pass
-    - {a-SW: 614C, a-recv: '', level: '3', msg: Select Cmd, r-SW: '', r-recv: '',
-      send: 00A4040007A0000003330101, status: Pass}
-    - {a-SW: '9000', a-recv: 6F4A8408A000000333010101A53E500A50424F432044454249548701019F38099F7A019F02065F2A025F2D027A689F1101019F120A50424F43204445424954BF0C0A9F4D020B0ADF4D020C0A,
-      level: '3', msg: Get Response, r-SW: '', r-recv: 6F0A8408A000000333010102, send: 00C000004C,
-      status: Fail}
-    - {a-value: '111', level: '3', msg: Unnamed Match, r-value: '123', status: Fail}
-    msg: Select Process
-    status: Fail
+    - {level: '3', msg: 'ATR:3B8480016981780194', status: Pass}
+    - {a-SW: '9000', a-recv: 6F608408A000000333010101A554500A50424F432044454249548701019F381B9F66049F02069F03069F1A0295055F2A029A039C019F3704DF60015F2D027A689F1101019F120A50424F43204445424954BF0C0E9F4D020B0ADF4D020C0ADF610101,
+      level: '3', msg: Select Cmd, r-SW: '', r-recv: '', send: 00A4040008A000000333010101,
+      status: Pass}
+    msg: Select Cmd
+    status: Pass
   msg: Standard Transcation
-  status: Fail
+  status: Pass
 - level: '1'
   module:
   - level: '2'
@@ -87,7 +28,3 @@
     status: Pass
   msg: Release Context
   status: Pass
-- level: '1'
-  module: []
-  msg: Case [test_standard_procedure] Failed. Please Check Case Log!
-  status: Fail
